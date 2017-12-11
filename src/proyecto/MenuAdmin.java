@@ -150,12 +150,27 @@ public class MenuAdmin extends javax.swing.JFrame {
         jmnEliminar.setText("Eliminar");
 
         eliVehiculos.setText("Vehículos");
+        eliVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliVehiculosActionPerformed(evt);
+            }
+        });
         jmnEliminar.add(eliVehiculos);
 
         eliMarcas.setText("Marcas");
+        eliMarcas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliMarcasActionPerformed(evt);
+            }
+        });
         jmnEliminar.add(eliMarcas);
 
         eliModelo.setText("Modelo");
+        eliModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliModeloActionPerformed(evt);
+            }
+        });
         jmnEliminar.add(eliModelo);
 
         eliEstilo.setText("Estilo");
@@ -167,6 +182,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         jmnEliminar.add(eliEstilo);
 
         eliOficinas.setText("Oficina");
+        eliOficinas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliOficinasActionPerformed(evt);
+            }
+        });
         jmnEliminar.add(eliOficinas);
 
         jMenuBar1.add(jmnEliminar);
@@ -226,6 +246,9 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private void eliEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliEstiloActionPerformed
         // TODO add your handling code here:
+        MenuAdminEliminarEstilo v = new MenuAdminEliminarEstilo();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
     }//GEN-LAST:event_eliEstiloActionPerformed
 
     private void agreMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agreMarcasActionPerformed
@@ -295,6 +318,34 @@ public class MenuAdmin extends javax.swing.JFrame {
         jDesktopPane1.add(v);
         v.setVisible(true);
     }//GEN-LAST:event_ediOficinaActionPerformed
+
+    private void eliVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliVehiculosActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEliminarVehiculo v = new MenuAdminEliminarVehiculo();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_eliVehiculosActionPerformed
+
+    private void eliMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliMarcasActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEliminarMarcas v = new MenuAdminEliminarMarcas();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_eliMarcasActionPerformed
+
+    private void eliModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliModeloActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEliminarModelo v = new MenuAdminEliminarModelo();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_eliModeloActionPerformed
+
+    private void eliOficinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliOficinasActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEliminarOficina v = new MenuAdminEliminarOficina();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_eliOficinasActionPerformed
 
     /**
      * @param args the command line arguments

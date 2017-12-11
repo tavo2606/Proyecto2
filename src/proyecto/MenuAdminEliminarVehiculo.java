@@ -7,41 +7,41 @@ import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
+public class MenuAdminEliminarVehiculo extends javax.swing.JInternalFrame {
 
     private Connection connection = null;
     private ResultSet rs = null;
     private Statement s = null;
-    
-    public MenuAdminEditarVehiculos() {
+
+    public MenuAdminEliminarVehiculo() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         llenarCombos();
     }
-    
-    private void llenarCombos(){
+
+    private void llenarCombos() {
         llenar("estilo", cmbEstilo, "nombre_estilo");
         llenar("marca", cmbMarca, "nombre_marca");
         llenar("modelo", cmbModelo, "nombre_modelo");
         llenar("vehiculo", cmbPlacas, "placa");
     }
-    
-    private void llenar(String nombreTabla, JComboBox combo, String idNombre){
+
+    private void llenar(String nombreTabla, JComboBox combo, String idNombre) {
         Conexion();
-        try{
+        try {
             s = connection.createStatement();
-            rs = s.executeQuery("SELECT * FROM \""+nombreTabla+"\" ");
-            
-            while(rs.next()){   
+            rs = s.executeQuery("SELECT * FROM \"" + nombreTabla + "\" ");
+
+            while (rs.next()) {
                 combo.addItem(rs.getString(idNombre));
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void limpiar(){
+
+    private void limpiar() {
         txtAnno.setText(null);
         txtAnno.setEditable(false);
         txtPrecio.setText(null);
@@ -57,7 +57,7 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
         cmbTransmi.setSelectedIndex(0);
         cmbTransmi.setEnabled(false);
         txtAnno.requestFocus();
-        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
     
     public void Conexion() {
@@ -75,14 +75,6 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
             }
         } catch (Exception e) {
             System.out.println("Problem when connecting to the database");
-        }
-    }
-
-    private boolean estadoV() {
-        if (cmbEstado.getSelectedItem().toString().equalsIgnoreCase("Disponible")) {
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -110,35 +102,31 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
-        btnGuardar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         cmbPlacas = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Editar [Vehículos]");
+        setTitle("Eliminar [Vehículo]");
 
         jLabel1.setText("Placa: ");
 
         jLabel2.setText("Marca: ");
 
         cmbMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Marcas>" }));
-        cmbMarca.setEnabled(false);
 
         cmbModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Modelos>" }));
-        cmbModelo.setEnabled(false);
 
         jLabel3.setText("Modelo: ");
 
         jLabel4.setText("Estilo: ");
 
         cmbEstilo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Estilos>" }));
-        cmbEstilo.setEnabled(false);
 
         jLabel5.setText("Transmisión: ");
 
         cmbTransmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Automática", "Manual" }));
-        cmbTransmi.setEnabled(false);
 
         jLabel6.setText("Año: ");
 
@@ -151,13 +139,12 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
         jLabel8.setText("Estado: ");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponible", "Ocupado" }));
-        cmbEstado.setEnabled(false);
 
-        btnGuardar.setText("Guardar");
-        btnGuardar.setEnabled(false);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -218,10 +205,10 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGuardar)
+                        .addComponent(btnEliminar)
                         .addGap(59, 59, 59)
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +247,7 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
                     .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
+                    .addComponent(btnEliminar)
                     .addComponent(btnSalir))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -268,37 +255,25 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         Conexion();
         try{
-            String e = cmbEstilo.getSelectedItem().toString();
-            int p = Integer.parseInt(cmbPlacas.getSelectedItem().toString());
-            String m = cmbModelo.getSelectedItem().toString(), marc = cmbMarca.getSelectedItem().toString();
-            String trans = cmbTransmi.getSelectedItem().toString();
-            int a = Integer.parseInt(txtAnno.getText());
-            float pre = Integer.parseInt(txtPrecio.getText());
-            boolean est = estadoV();
-
+            String p = cmbPlacas.getSelectedItem().toString();
             s = connection.createStatement();
-            int z = s.executeUpdate("UPDATE vehiculo SET "
-                                                       + "\"año\" = '"+a+"', \"precio\" = '"+pre+"', "
-                                                       + "\"estado\" = '"+est+"', \"estilo\" = '"+e+"', "
-                                                       + "\"modelo\" = '"+m+"', \"marca\" = '"+marc+"', "
-                                                       + "\"transmision\" = '"+trans+"' "
-                                                       + "WHERE \"placa\" = '"+p+"'");
+            int z = s.executeUpdate("DELETE FROM vehiculo WHERE \"placa\" = '"+p+"'");
 
             if(z==1){
-                JOptionPane.showMessageDialog(null, "Vehículo Modificado", "Editar", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, "Vehículo Eliminado", "Eliminar", JOptionPane.DEFAULT_OPTION);
             }else{
-                JOptionPane.showMessageDialog(null, "Vehículo no modificado", "Error", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, "Vehículo no Eliminado", "Error", JOptionPane.DEFAULT_OPTION);
             }
 
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        cmbPlacas.setSelectedIndex(0);
-    }//GEN-LAST:event_btnGuardarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
@@ -318,21 +293,13 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
                 while (rs.next()) {
                     if(cmbPlacas.getSelectedItem().toString().equalsIgnoreCase(rs.getString("placa").toString())){
                         cmbMarca.setSelectedItem(rs.getString("marca"));
-                        cmbMarca.setEnabled(true);
                         cmbModelo.setSelectedItem(rs.getString("modelo"));
-                        cmbModelo.setEnabled(true);
                         cmbEstilo.setSelectedItem(rs.getString("estilo"));
-                        cmbEstilo.setEnabled(true);
                         cmbTransmi.setSelectedItem(rs.getString("transmision"));
-                        cmbTransmi.setEnabled(true);
                         txtAnno.setText(rs.getString("año"));
-                        txtAnno.setEditable(true);
                         txtPrecio.setText(rs.getString("precio"));
-                        txtPrecio.setEditable(true);
-                        cmbEstado.setSelectedIndex(estadoCombo(rs.getString("estado")));
-                        cmbEstado.setEnabled(true);
-                        
-                        btnGuardar.setEnabled(true);
+
+                        btnEliminar.setEnabled(true);
                     }
                 }
 
@@ -346,16 +313,9 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbPlacasActionPerformed
 
-    private int estadoCombo(String estado){
-        if("true".equals(estado)){
-            return 0;
-        }else{
-            return 1;
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbEstilo;
