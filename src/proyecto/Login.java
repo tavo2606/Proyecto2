@@ -51,7 +51,7 @@ public class Login extends javax.swing.JFrame {
         btnRegistrarse = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
+        txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -102,8 +102,8 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                            .addComponent(txtUser))))
+                            .addComponent(txtUser)
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -115,8 +115,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIngresar)
@@ -142,11 +142,32 @@ public class Login extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         Conexion();
+        boolean bandera = false;
         try{
             s = connection.createStatement();
+            rs = s.executeQuery("SELECT * FROM usuarios");
+            
+            while(rs.next()){
+                if(rs.getString("nombre").equalsIgnoreCase(txtUser.getText()) && rs.getString("contraseña").equalsIgnoreCase(txtPass.getText())){
+                    if(rs.getString("admin").toCharArray()[0] == 'n'){
+                        MenuUser v = new MenuUser();
+                        v.setVisible(true);
+                    }else{
+                        MenuAdmin v = new MenuAdmin();
+                        v.setVisible(true);
+                    }
+                    bandera = true;
+                }
+            }
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e,"Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        if(!bandera){
+            JOptionPane.showMessageDialog(null, "Contraseña/usuario incorrectos.","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            this.dispose();
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -191,7 +212,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
