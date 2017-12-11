@@ -185,28 +185,7 @@ public class Registrarse extends javax.swing.JFrame {
         }
         limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private Integer idUsuario(){
-        Conexion();
-        int ide = 0;
-        try{
-        
-            s = connection.createStatement();
-            rs = s.executeQuery("SELECT MAX(\"id_usuario\") from usuarios");
-            try{
-                while(rs.next()){
-                    ide = Integer.parseInt(rs.getString("max")) + 1;
-                }
-            }catch(Exception e){
-                ide = 0;
-            }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return ide;
-    }
-    
-    
+ 
     private void limpiar(){
         txtCedula.setText(null);
         txtDirecc.setText(null);
