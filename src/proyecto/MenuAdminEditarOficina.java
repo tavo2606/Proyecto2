@@ -6,36 +6,38 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
+public class MenuAdminEditarOficina extends javax.swing.JInternalFrame {
 
     private Connection connection = null;
     private ResultSet rs = null;
     private Statement s = null;
     
-    public MenuAdminAgregarModelo() {
+    public MenuAdminEditarOficina() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        txtID.setText(String.valueOf(idModelo()));
+        llenarCombo();
     }
     
-    private Integer idModelo(){
+    private void llenarCombo(){
         Conexion();
-        int ide = 0;
         try{
-        
             s = connection.createStatement();
-            rs = s.executeQuery("SELECT MAX(\"id_modelo\") from modelo");
-            try{
-                while(rs.next()){
-                    ide = Integer.parseInt(rs.getString("max")) + 1;
-                }
-            }catch(Exception e){
-                ide = 1;
+            rs = s.executeQuery("SELECT * FROM oficinas");
+            
+            while(rs.next()){
+                cmbOficinas.addItem(rs.getString("id_oficina"));
             }
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        return ide;
+        cmbOficinas.setSelectedIndex(0);
+    }
+
+    private void limpiar() {
+        txtNombre.setText(null);
+        txtNombre.setEditable(false);
+        btnGuardar.setEnabled(false);
     }
     
     public void Conexion() {
@@ -55,7 +57,7 @@ public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
             System.out.println("Problem when connecting to the database");
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,14 +69,14 @@ public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
 
         btnSalir = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        cmbOficinas = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Agregar [Modelo]");
+        setTitle("Editar [Oficina]");
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -84,17 +86,25 @@ public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Nombre del modelo: ");
+        jLabel2.setText("Nombre de la Oficina: ");
 
-        txtID.setEditable(false);
+        txtNombre.setEditable(false);
 
-        jLabel1.setText("ID del modelo: ");
+        jLabel1.setText("ID de la Oficina: ");
+
+        cmbOficinas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Oficinas>" }));
+        cmbOficinas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbOficinasItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,26 +114,29 @@ public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(2, 2, 2)
-                        .addComponent(txtNombre))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnGuardar)
                         .addGap(50, 50, 50)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                            .addComponent(cmbOficinas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cmbOficinas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -132,7 +145,7 @@ public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnSalir))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,38 +161,53 @@ public class MenuAdminAgregarModelo extends javax.swing.JInternalFrame {
         Conexion();
         try{
 
-            int idModelo = Integer.parseInt(txtID.getText());
-            String modelo = txtNombre.getText();
+            String oficina = txtNombre.getText(), idOficina = cmbOficinas.getSelectedItem().toString();
 
             s = connection.createStatement();
-            int z = s.executeUpdate("INSERT INTO \"modelo\" (\"id_modelo\", \"nombre_modelo\") "
-                + "VALUES ('"+idModelo+"', '"+modelo+"') ");
+            int z = s.executeUpdate("UPDATE oficinas SET \"nombre_oficina\" = '"+oficina+"' WHERE \"id_oficina\" = '"+idOficina+"'");
 
             if (z == 1) {
-                JOptionPane.showMessageDialog(null, "modelo agregado", "Agregado", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, "oficina Editado", "Editadar", JOptionPane.DEFAULT_OPTION);
             } else {
-                JOptionPane.showMessageDialog(null, "modelo no agregado", "Error", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, "oficina no Editado", "Error", JOptionPane.DEFAULT_OPTION);
             }
 
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        limpiar();
+        cmbOficinas.setSelectedIndex(0);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    
-    private void limpiar(){
-        txtID.setText(String.valueOf(idModelo()));
-        txtNombre.setText(null);
-        txtNombre.requestFocus();
-    }
+    private void cmbOficinasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbOficinasItemStateChanged
+        // TODO add your handling code here:
+        if(cmbOficinas.getSelectedIndex() == 0){
+            limpiar();
+        }else{
+            Conexion();
+            try{
+                String idOficina = cmbOficinas.getSelectedItem().toString();
+                s = connection.createStatement();
+                rs = s.executeQuery("SELECT * FROM oficinas WHERE \"id_oficina\" = '"+idOficina+"'");
+                
+                while(rs.next()){
+                    txtNombre.setText(rs.getString("nombre_oficina"));
+                    txtNombre.setEditable(true);
+                    btnGuardar.setEnabled(true);
+                }
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Archivo no encontrado " + e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_cmbOficinasItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cmbOficinas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

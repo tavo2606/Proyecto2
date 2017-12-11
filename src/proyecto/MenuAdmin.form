@@ -60,16 +60,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Veh&#xed;culos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ediVehiculosActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ediMarcas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Marcas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ediMarcasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ediModelo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modelo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ediModeloActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ediEstilo">
               <Properties>
@@ -83,6 +92,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Oficina"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ediOficinaActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

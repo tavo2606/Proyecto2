@@ -106,12 +106,27 @@ public class MenuAdmin extends javax.swing.JFrame {
         jmnEditar.setText("Editar");
 
         ediVehiculos.setText("Vehículos");
+        ediVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ediVehiculosActionPerformed(evt);
+            }
+        });
         jmnEditar.add(ediVehiculos);
 
         ediMarcas.setText("Marcas");
+        ediMarcas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ediMarcasActionPerformed(evt);
+            }
+        });
         jmnEditar.add(ediMarcas);
 
         ediModelo.setText("Modelo");
+        ediModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ediModeloActionPerformed(evt);
+            }
+        });
         jmnEditar.add(ediModelo);
 
         ediEstilo.setText("Estilo");
@@ -123,6 +138,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         jmnEditar.add(ediEstilo);
 
         ediOficina.setText("Oficina");
+        ediOficina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ediOficinaActionPerformed(evt);
+            }
+        });
         jmnEditar.add(ediOficina);
 
         jMenuBar1.add(jmnEditar);
@@ -199,6 +219,9 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private void ediEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ediEstiloActionPerformed
         // TODO add your handling code here:
+        MenuAdminEditarEstilo v = new MenuAdminEditarEstilo();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
     }//GEN-LAST:event_ediEstiloActionPerformed
 
     private void eliEstiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliEstiloActionPerformed
@@ -244,6 +267,34 @@ public class MenuAdmin extends javax.swing.JFrame {
         jDesktopPane1.add(v);
         v.setVisible(true);
     }//GEN-LAST:event_agreVehiculosActionPerformed
+
+    private void ediVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ediVehiculosActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEditarVehiculos v = new MenuAdminEditarVehiculos();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_ediVehiculosActionPerformed
+
+    private void ediMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ediMarcasActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEditarMarcas v = new MenuAdminEditarMarcas();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_ediMarcasActionPerformed
+
+    private void ediModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ediModeloActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEditarModelo v = new MenuAdminEditarModelo();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_ediModeloActionPerformed
+
+    private void ediOficinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ediOficinaActionPerformed
+        // TODO add your handling code here:
+        MenuAdminEditarOficina v = new MenuAdminEditarOficina();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_ediOficinaActionPerformed
 
     /**
      * @param args the command line arguments
