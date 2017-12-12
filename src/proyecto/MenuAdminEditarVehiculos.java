@@ -347,7 +347,7 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmbPlacasActionPerformed
 
     private int estadoCombo(String estado){
-        if("true".equals(estado)){
+        if("f".equals(estado)){
             return 0;
         }else{
             return 1;

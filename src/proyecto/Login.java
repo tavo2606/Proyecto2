@@ -151,6 +151,7 @@ public class Login extends javax.swing.JFrame {
                 if(rs.getString("nombre").equalsIgnoreCase(txtUser.getText()) && rs.getString("contraseña").equalsIgnoreCase(txtPass.getText())){
                     if(rs.getString("admin").toCharArray()[0] == 'n'){
                         MenuUser v = new MenuUser();
+                        v.user = rs.getString("id_usuario")+"-"+txtUser.getText();
                         v.setVisible(true);
                     }else{
                         MenuAdmin v = new MenuAdmin();
