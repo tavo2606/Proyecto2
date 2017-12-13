@@ -155,7 +155,7 @@ public class MenuAdminReporte2 extends javax.swing.JInternalFrame {
                 
                 Font fuente = new Font();
                 fuente.setStyle(Font.BOLD);
-                documento.add(new Paragraph("Reporte #2", fuente));
+                documento.add(new Paragraph("Reporte #2 (" + cmbEstado.getSelectedItem().toString() +")" , fuente));
                 
                 documento.add(texto);
                 documento.close();
