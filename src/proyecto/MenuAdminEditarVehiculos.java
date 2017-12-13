@@ -313,27 +313,25 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
         } else {
             try {
                 s = connection.createStatement();
-                rs = s.executeQuery("SELECT * FROM vehiculo");
+                rs = s.executeQuery("SELECT * FROM vehiculo WHERE \"placa\" = '"+cmbPlacas.getSelectedItem().toString()+"' ");
 
                 while (rs.next()) {
-                    if(cmbPlacas.getSelectedItem().toString().equalsIgnoreCase(rs.getString("placa").toString())){
-                        cmbMarca.setSelectedItem(rs.getString("marca"));
-                        cmbMarca.setEnabled(true);
-                        cmbModelo.setSelectedItem(rs.getString("modelo"));
-                        cmbModelo.setEnabled(true);
-                        cmbEstilo.setSelectedItem(rs.getString("estilo"));
-                        cmbEstilo.setEnabled(true);
-                        cmbTransmi.setSelectedItem(rs.getString("transmision"));
-                        cmbTransmi.setEnabled(true);
-                        txtAnno.setText(rs.getString("año"));
-                        txtAnno.setEditable(true);
-                        txtPrecio.setText(rs.getString("precio"));
-                        txtPrecio.setEditable(true);
-                        cmbEstado.setSelectedIndex(estadoCombo(rs.getString("estado")));
-                        cmbEstado.setEnabled(true);
-                        
-                        btnGuardar.setEnabled(true);
-                    }
+                    cmbMarca.setSelectedItem(rs.getString("marca"));
+                    cmbMarca.setEnabled(true);
+                    cmbModelo.setSelectedItem(rs.getString("modelo"));
+                    cmbModelo.setEnabled(true);
+                    cmbEstilo.setSelectedItem(rs.getString("estilo"));
+                    cmbEstilo.setEnabled(true);
+                    cmbTransmi.setSelectedItem(rs.getString("transmision"));
+                    cmbTransmi.setEnabled(true);
+                    txtAnno.setText(rs.getString("año"));
+                    txtAnno.setEditable(true);
+                    txtPrecio.setText(rs.getString("precio"));
+                    txtPrecio.setEditable(true);
+                    cmbEstado.setSelectedIndex(estadoCombo(rs.getString("estado")));
+                    cmbEstado.setEnabled(true);
+
+                    btnGuardar.setEnabled(true);
                 }
 
             } catch (Exception e) {
@@ -347,7 +345,7 @@ public class MenuAdminEditarVehiculos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmbPlacasActionPerformed
 
     private int estadoCombo(String estado){
-        if("f".equals(estado)){
+        if("t".equals(estado)){
             return 0;
         }else{
             return 1;

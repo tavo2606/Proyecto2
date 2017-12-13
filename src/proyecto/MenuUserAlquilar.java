@@ -36,7 +36,7 @@ public class MenuUserAlquilar extends javax.swing.JInternalFrame {
     }
     
     private void llenarCombos(){
-        llenar("\"vehiculo\" WHERE \"estado\" = 'false'", cmbPlacas, "placa");
+        llenar("\"vehiculo\" WHERE \"estado\" = 't'", cmbPlacas, "placa");
         llenar("\"oficinas\"", cmbOficinasR, "id_oficina");
         llenar("\"oficinas\"", cmbOficinasD, "id_oficina");
     }
@@ -334,18 +334,20 @@ public class MenuUserAlquilar extends javax.swing.JInternalFrame {
                     .addComponent(jLabel10)
                     .addComponent(cmbOficinasD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtFechaD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
-                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(txtFechaD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(txtHoraD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtHoraD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlquilar)
@@ -389,7 +391,7 @@ public class MenuUserAlquilar extends javax.swing.JInternalFrame {
                 
                 
                 s = connection.createStatement();
-                z = s.executeUpdate("UPDATE vehiculo SET \"estado\" = 't' WHERE \"placa\" = '"+placa+"'");
+                z = s.executeUpdate("UPDATE vehiculo SET \"estado\" = 'f' WHERE \"placa\" = '"+placa+"'");
                 
                 if (z == 1) {
                     JOptionPane.showMessageDialog(null, "Alquiler de vehículo completado", "Alquiler", JOptionPane.DEFAULT_OPTION);

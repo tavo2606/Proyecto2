@@ -1,9 +1,25 @@
 package proyecto;
 
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class MenuAdmin extends javax.swing.JFrame {
 
+    private Connection connection = null;
+    private ResultSet rs = null;
+    private Statement s = null;
+    
     public MenuAdmin() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -11,6 +27,24 @@ public class MenuAdmin extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    public void Conexion() {
+        if (connection != null) {
+            return;
+        }
+
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String password = "123";
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(url, "postgres", password);
+            if (connection != null) {
+                System.out.println("Connecting to database...");
+            }
+        } catch (Exception e) {
+            System.out.println("Problem when connecting to the database");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +75,9 @@ public class MenuAdmin extends javax.swing.JFrame {
         eliEstilo = new javax.swing.JMenuItem();
         eliOficinas = new javax.swing.JMenuItem();
         jmnReportes = new javax.swing.JMenu();
+        reporte1 = new javax.swing.JMenuItem();
+        reporte2 = new javax.swing.JMenuItem();
+        reporte3 = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenu();
         jmnCerrarSesion = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -192,6 +229,31 @@ public class MenuAdmin extends javax.swing.JFrame {
         jMenuBar1.add(jmnEliminar);
 
         jmnReportes.setText("Reportes");
+
+        reporte1.setText("Reporte 1");
+        reporte1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporte1ActionPerformed(evt);
+            }
+        });
+        jmnReportes.add(reporte1);
+
+        reporte2.setText("Reporte 2");
+        reporte2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporte2ActionPerformed(evt);
+            }
+        });
+        jmnReportes.add(reporte2);
+
+        reporte3.setText("Reporte 3");
+        reporte3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporte3ActionPerformed(evt);
+            }
+        });
+        jmnReportes.add(reporte3);
+
         jMenuBar1.add(jmnReportes);
 
         Salir.setText("Salir");
@@ -347,6 +409,131 @@ public class MenuAdmin extends javax.swing.JFrame {
         v.setVisible(true);
     }//GEN-LAST:event_eliOficinasActionPerformed
 
+    private void reporte2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte2ActionPerformed
+        // TODO add your handling code here:
+        MenuAdminReporte2 v = new MenuAdminReporte2();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+    }//GEN-LAST:event_reporte2ActionPerformed
+
+    private void reporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte1ActionPerformed
+        // TODO add your handling code here:
+        
+        String fecha = JOptionPane.showInputDialog("Digite el rango de fecha (00-0000/00-0000)").replaceAll("/", "_");
+        
+        if (fecha != null ) {
+            Document documento = new Document();
+            FileOutputStream fichero;
+
+            try { // crear el archivo
+                fichero = new FileOutputStream("PDF\\Reporte1(" + fecha + ").PDF");
+                PdfWriter.getInstance(documento, fichero).setInitialLeading(20);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            try {
+                documento.open();
+                //agregar
+                Conexion();
+                String fecha1 = fecha.split("_")[0].split("-")[1] + "-" + fecha.split("_")[0].split("-")[0] + "-1";
+                String fecha2 = fecha.split("_")[1].split("-")[1] + "-" + fecha.split("_")[1].split("-")[0] + "-31";
+                
+                s = connection.createStatement();
+                rs = s.executeQuery("SELECT * FROM alquiler_vehiculos WHERE \"fecha_retiro\" BETWEEN '"+fecha1+"' and '"+fecha2+"' ");
+                Paragraph texto = new Paragraph();
+                while(rs.next()){
+                    texto.add("Placa: " +rs.getString("placa_vehiculo") + "\n");
+                    texto.add("Cédula: " + rs.getString("id_usuario") + "\n");
+                    texto.add("User: " + rs.getString("nombre_usuario") + "\n");
+                    texto.add("Fecha Retiro: " + rs.getString("fecha_retiro") + "\n");
+                    texto.add("Fecha Devolucion: " + rs.getString("fecha_devolucion") + "\n");
+                    texto.add("-----------------------------------------------------------------------------------------------" + "\n");     
+                }
+                Font fuente = new Font();
+                fuente.setStyle(Font.BOLD);
+                documento.add(new Paragraph("Reporte #1", fuente));
+                documento.add(texto);
+                //cerrar
+                documento.close();
+
+                File ruta = new File("PDF\\Reporte1(" + fecha + ").PDF");
+                Desktop.getDesktop().open(ruta);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    }//GEN-LAST:event_reporte1ActionPerformed
+
+    private void reporte3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte3ActionPerformed
+        // TODO add your handling code here:
+        Document documento = new Document();
+        FileOutputStream fichero;
+
+        try { // crear el archivo
+            fichero = new FileOutputStream("PDF\\Reporte3(Usuarios).PDF");
+            PdfWriter.getInstance(documento, fichero).setInitialLeading(20);
+        
+            documento.open();
+            Paragraph texto = new Paragraph();
+            
+            Conexion();
+            s = connection.createStatement();
+            rs = s.executeQuery("SELECT * FROM usuarios INNER JOIN alquiler_vehiculos ON usuarios.id_usuario = alquiler_vehiculos.id_usuario");
+            
+            while(rs.next()){
+                texto.add("//--------------------Info User--------------------//" + "\n");
+                texto.add("ID User: " + rs.getString("id_usuario") + "\n");
+                texto.add("User: " + rs.getString("nombre") + "\n");
+                texto.add("Telefono: " + rs.getString("telefono") + "\n");
+                texto.add("Dirección: " + rs.getString("direccion")+ "\n");
+                texto.add("//--------------------Info Vehiculo--------------------//" + "\n");
+                texto.add("Placa: " + rs.getString("placa_vehiculo") + "\n");
+                texto.add("Oficina Retiro: " + rs.getString("oficina_retiro") + "\n");
+                texto.add("Oficina Devolución: " + rs.getString("oficina_devolucion") + "\n");
+                texto.add("Fecha Retiro: " + rs.getString("fecha_retiro") + "\n");
+                texto.add("Hora de Retiro: " + rs.getString("hora_retiro") + "\n");
+                texto.add("Fecha Devolución" + rs.getString("fecha_devolucion") + "\n");
+                texto.add("Hora de Devolución" + rs.getString("hora_devolucion") + "\n");
+                texto.add("Precion de alquiler por día($): " + rs.getString("precio_alquiler") + "\n");
+                texto.add("-----------------------------------------------------------------------------------------------------------------------------------------" + "\n");
+            }       
+            Font fuente = new Font();
+            fuente.setStyle(Font.BOLD);
+            documento.add(new Paragraph("Reporte #3", fuente));
+            documento.add(texto);
+            documento.close();
+            
+            File ruta = new File("PDF\\Reporte3(Usuarios).PDF");
+            Desktop.getDesktop().open(ruta);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        
+    }//GEN-LAST:event_reporte3ActionPerformed
+
+    private boolean alquila(String idUser){
+        Conexion();
+        boolean bandera = false;
+        try {
+            s = connection.createStatement();
+            rs = s.executeQuery("SELECT * FROM alquiler_vehiculos WHERE \"id_usuario\" = '" + idUser + "'");
+
+            while (rs.next()) {
+                bandera = true;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return bandera;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -407,5 +594,8 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JMenu jmnEditar;
     private javax.swing.JMenu jmnEliminar;
     private javax.swing.JMenu jmnReportes;
+    private javax.swing.JMenuItem reporte1;
+    private javax.swing.JMenuItem reporte2;
+    private javax.swing.JMenuItem reporte3;
     // End of variables declaration//GEN-END:variables
 }
