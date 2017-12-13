@@ -124,7 +124,10 @@ public class MenuUser extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Usuari: " + user);
+        MenuUserBuscar v = new MenuUserBuscar();
+        jDesktopPane1.add(v);
+        v.setVisible(true);
+                
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**

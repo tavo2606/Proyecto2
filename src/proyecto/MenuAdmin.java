@@ -498,7 +498,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 texto.add("Fecha Devolución" + rs.getString("fecha_devolucion") + "\n");
                 texto.add("Hora de Devolución" + rs.getString("hora_devolucion") + "\n");
                 texto.add("Precion de alquiler por día($): " + rs.getString("precio_alquiler") + "\n");
-                texto.add("-----------------------------------------------------------------------------------------------------------------------------------------" + "\n");
+                texto.add("----------------------------------------------------------------------------------------------------------------------------------" + "\n");
             }       
             Font fuente = new Font();
             fuente.setStyle(Font.BOLD);
