@@ -1,0 +1,21 @@
+-- Table: public.usuarios
+
+-- DROP TABLE public.usuarios;
+
+CREATE TABLE public.usuarios
+(
+    id_usuario integer NOT NULL,
+    nombre character varying COLLATE pg_catalog."default",
+    telefono integer,
+    direccion character varying COLLATE pg_catalog."default",
+    "contraseña" character varying COLLATE pg_catalog."default",
+    admin "char",
+    CONSTRAINT usuarios_pkey PRIMARY KEY (id_usuario)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.usuarios
+    OWNER to postgres;

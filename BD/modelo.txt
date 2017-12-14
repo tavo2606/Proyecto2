@@ -1,0 +1,17 @@
+-- Table: public.modelo
+
+-- DROP TABLE public.modelo;
+
+CREATE TABLE public.modelo
+(
+    id_modelo integer NOT NULL,
+    nombre_modelo character varying COLLATE pg_catalog."default",
+    CONSTRAINT modelo_pkey PRIMARY KEY (id_modelo)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.modelo
+    OWNER to postgres;

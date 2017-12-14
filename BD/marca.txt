@@ -1,0 +1,17 @@
+-- Table: public.marca
+
+-- DROP TABLE public.marca;
+
+CREATE TABLE public.marca
+(
+    id_marca integer NOT NULL,
+    nombre_marca character varying COLLATE pg_catalog."default",
+    CONSTRAINT marca_pkey PRIMARY KEY (id_marca)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.marca
+    OWNER to postgres;

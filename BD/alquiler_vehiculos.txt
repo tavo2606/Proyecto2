@@ -1,0 +1,24 @@
+-- Table: public.alquiler_vehiculos
+
+-- DROP TABLE public.alquiler_vehiculos;
+
+CREATE TABLE public.alquiler_vehiculos
+(
+    placa_vehiculo integer,
+    id_usuario integer,
+    nombre_usuario character varying COLLATE pg_catalog."default",
+    oficina_retiro integer,
+    oficina_devolucion integer,
+    fecha_retiro date,
+    hora_retiro integer,
+    fecha_devolucion date,
+    hora_devolucion integer,
+    precio_alquiler double precision
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.alquiler_vehiculos
+    OWNER to postgres;
